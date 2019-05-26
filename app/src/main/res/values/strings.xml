@@ -2,7 +2,7 @@
     <string name="app_name">Chef</string>
     <string name="action_user_info">User info</string>
     <string name="ingredients_input_field_hint">Provide your ingredients</string>
-    <string name="recipeCount_text_label">Number of search results: </string>
+    <string name="recipeCount_text_label">Number of search results:\u0020</string>
     <string name="preparationTime_text_label">Dish preparation time [min]: </string>
     <string name="button_search_label">Search for recipes</string>
     <string-array name="recipeCount_spinner_data">
