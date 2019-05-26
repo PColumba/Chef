@@ -14,21 +14,17 @@ public class Recipe implements Parcelable {
     private String mImageURL;
     private String mSourceURL;
     private List<String> mIngredientsList;
-    private Bitmap mImageBitmap;
 
     public Recipe(String label, String imageURL, String sourceURL, List<String> ingredientsList){
         this.mLabel = label;
         this.mImageURL = imageURL;
         this.mSourceURL = sourceURL;
         this.mIngredientsList = ingredientsList;
-        this.mImageBitmap = null;
     }
 
     public String getImageURL() {
         return mImageURL;
     }
-
-    public Bitmap getImageBitmap() { return  mImageBitmap;}
 
     public String getSourceURL() {
         return mSourceURL;
@@ -38,8 +34,6 @@ public class Recipe implements Parcelable {
         return mLabel;
     }
 
-    public void setImageBitmap(Bitmap imageBitmap) {this.mImageBitmap = imageBitmap;}
-
     protected Recipe(Parcel in) {
         mLabel = in.readString();
         mImageURL = in.readString();
@@ -47,7 +41,6 @@ public class Recipe implements Parcelable {
         if(mIngredientsList == null)
             mIngredientsList = new ArrayList<>();
         in.readStringList(mIngredientsList);
-        mImageBitmap = in.readParcelable(null);
     }
 
     public static final Parcelable.Creator<Recipe> CREATOR = new Parcelable.Creator<Recipe>() {
@@ -73,7 +66,6 @@ public class Recipe implements Parcelable {
         dest.writeString(mImageURL);
         dest.writeString(mSourceURL);
         dest.writeStringList(mIngredientsList);
-        dest.writeParcelable(mImageBitmap,0);
     }
 
     public String ingredientsListToString(){

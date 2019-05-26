@@ -19,6 +19,7 @@ import com.example.chef.search_result_detailed.RecipeDetailsActivity;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
+import com.bumptech.glide.Glide;
 
 public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHolder> {
 
@@ -62,38 +63,21 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
 
         void bind(Recipe currentRecipe){
             mRecipeLabel.setText(currentRecipe.getLabel());
-            new ImageDownloadTask(mRecipeImage).execute(currentRecipe);
+            Glide.with(mContext)
+                    .load(currentRecipe.getImageURL())
+                    .into(mRecipeImage);
         }
 
 
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(mContext, RecipeDetailsActivity.class);
-            Log.d("App-com.example.chef",mRecipes.get(getAdapterPosition()).getImageBitmap().toString());
             intent.putExtra(RECIPE_DETAILS, mRecipes.get(getAdapterPosition()));
             mContext.startActivity(intent);
         }
     }
 
-    static class ImageDownloadTask extends AsyncTask<Recipe, Void, Bitmap>{
 
-        private WeakReference<ImageView> mImageView;
-
-        ImageDownloadTask(ImageView imageView){
-            this.mImageView = new WeakReference<>(imageView);
-        }
-
-        @Override
-        protected Bitmap doInBackground(Recipe... recipes) {
-            return new DownloadImageForRecipe(recipes[0]).download();
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap recipeImage) {
-            super.onPostExecute(recipeImage);
-            mImageView.get().setImageBitmap(recipeImage);
-        }
-    }
 
 
 }

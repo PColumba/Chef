@@ -6,6 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.chef.R;
 import com.example.chef.Recipe;
 import com.example.chef.search_result.RecipesAdapter;
@@ -32,7 +33,9 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
         mRecipe = getIntent().getParcelableExtra(RecipesAdapter.RECIPE_DETAILS);
 
-        mRecipeDetailsImage.setImageBitmap(mRecipe.getImageBitmap());
+        Glide.with(this)
+                .load(mRecipe.getImageURL())
+                .into(mRecipeDetailsImage);
         mRecipeDetailsLabel.setText(mRecipe.getLabel());
         mRecipeDetailsIngredients.setText(mRecipe.ingredientsListToString());
         mRecipeDetailsPreparation.setText(getString(R.string.preparation_details_disclaimer) + mRecipe.getSourceURL());
