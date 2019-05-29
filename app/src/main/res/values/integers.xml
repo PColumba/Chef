@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="recipe_count_default_spinner_position">4</integer>
+    <integer name="preparation_time_default_spinner_position">5</integer>
+</resources>
