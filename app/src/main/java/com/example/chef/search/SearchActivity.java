@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -25,10 +26,14 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchActivity extends AppCompatActivity implements TextView.OnEditorActionListener {
+public class SearchActivity extends AppCompatActivity implements TextView.OnEditorActionListener, AdapterView.OnItemSelectedListener {
 
-    private String mQueryIngredients = "";
     private List<String> mIngredients;
+    private Spinner mPreparationTimeSpinner;
+    private Spinner mRecipeCountSpinner;
+    private int mPreparationTime = 60;
+    private int mRecipeCount = 5;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,29 +41,10 @@ public class SearchActivity extends AppCompatActivity implements TextView.OnEdit
         setContentView(R.layout.activity_search);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        Spinner recipeCountSpinner = findViewById(R.id.recipeCount_spinner);
-        Spinner preparationTimeSpinner = findViewById(R.id.preparationTime_spinner);
-        ArrayAdapter<CharSequence> recipeCountSpinnerAdapter = ArrayAdapter.createFromResource(this,
-                R.array.recipeCount_spinner_data, android.R.layout.simple_spinner_item);
-        ArrayAdapter<CharSequence> preparationTimeSpinnerAdapter = ArrayAdapter.createFromResource(this,
-                R.array.preparationTime_spinner_data, android.R.layout.simple_spinner_item);
-        recipeCountSpinner.setAdapter(recipeCountSpinnerAdapter);
-        preparationTimeSpinner.setAdapter(preparationTimeSpinnerAdapter);
-
         EditText ingredientsInputField = findViewById(R.id.ingredients_input_field);
         ingredientsInputField.setOnEditorActionListener(this);
-
-        //Test for ingredients recycler view
-        mIngredients = new ArrayList<>();
-        mIngredients.add("Tomato");
-        mIngredients.add("Onion");
-        mIngredients.add("Pickle");
-
-        RecyclerView ingredientsRecyclerView = findViewById(R.id.ingredients_list);
-        ingredientsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        IngredientsAdapter ingredientsAdapter = new IngredientsAdapter(this, mIngredients);
-        ingredientsRecyclerView.setAdapter(ingredientsAdapter);
-
+        initSpinner();
+        initRecycler();
     }
 
     @Override
@@ -92,8 +78,6 @@ public class SearchActivity extends AppCompatActivity implements TextView.OnEdit
         return super.onOptionsItemSelected(item);
     }
 
-
-
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if(actionId == EditorInfo.IME_ACTION_DONE) {
@@ -104,11 +88,46 @@ public class SearchActivity extends AppCompatActivity implements TextView.OnEdit
     }
 
     public void searchForRecipes(View view) {
-        new RecipesSearchTask(getApplicationContext()).execute(new RecipesSearch(mIngredients,5,60));
+        new RecipesSearchTask(getApplicationContext()).execute(new RecipesSearch(mIngredients,mRecipeCount,mPreparationTime));
     }
 
     public void displayToast(String message){
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        if(parent == mRecipeCountSpinner)
+            mRecipeCount = Integer.valueOf((String) parent.getAdapter().getItem(position));
+        else if(parent == mPreparationTimeSpinner)
+            mPreparationTime = Integer.valueOf((String) parent.getAdapter().getItem(position));
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        //Do nothing
+    }
+
+    private void initSpinner(){
+        mRecipeCountSpinner = findViewById(R.id.recipeCount_spinner);
+        mPreparationTimeSpinner = findViewById(R.id.preparationTime_spinner);
+        ArrayAdapter<CharSequence> recipeCountSpinnerAdapter = ArrayAdapter.createFromResource(this,
+                R.array.recipeCount_spinner_data, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> preparationTimeSpinnerAdapter = ArrayAdapter.createFromResource(this,
+                R.array.preparationTime_spinner_data, android.R.layout.simple_spinner_item);
+        mRecipeCountSpinner.setAdapter(recipeCountSpinnerAdapter);
+        mPreparationTimeSpinner.setAdapter(preparationTimeSpinnerAdapter);
+        mRecipeCountSpinner.setOnItemSelectedListener(this);
+        mPreparationTimeSpinner.setOnItemSelectedListener(this);
+        mRecipeCountSpinner.setSelection(getResources().getInteger(R.integer.recipe_count_default_spinner_position));
+        mPreparationTimeSpinner.setSelection(getResources().getInteger(R.integer.preparation_time_default_spinner_position));
+    }
+
+    private void initRecycler(){
+        mIngredients = new ArrayList<>();
+        RecyclerView ingredientsRecyclerView = findViewById(R.id.ingredients_list);
+        ingredientsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        IngredientsAdapter ingredientsAdapter = new IngredientsAdapter(this, mIngredients);
+        ingredientsRecyclerView.setAdapter(ingredientsAdapter);
+    }
 }
