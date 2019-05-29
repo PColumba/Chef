@@ -33,6 +33,8 @@ public class Recipe implements Parcelable {
         return mLabel;
     }
 
+    public List<String> getIngredientsList(){ return  mIngredientsList;}
+
     protected Recipe(Parcel in) {
         mLabel = in.readString();
         mImageURL = in.readString();
