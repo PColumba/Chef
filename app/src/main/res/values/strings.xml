@@ -42,4 +42,5 @@
     <string name="Continue_without_signing">Continue without signing in</string>
     <string name="missing_email_password_message">Both email and password must be present</string>
     <string name="user_info_activity_label">User Info</string>
+    <string name="user_label">User:</string>
 </resources>

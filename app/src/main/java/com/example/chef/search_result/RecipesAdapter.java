@@ -22,9 +22,9 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
     private List<Recipe> mRecipes;
     private Context mContext;
 
-    public static final String RECIPE_DETAILS = "com.example.chef.search_resutl.RecipesAdapter.lRecipe";
+    public static final String RECIPE_DETAILS = "com.example.chef.search_result.RecipesAdapter.lRecipe";
 
-    RecipesAdapter(Context context, List<Recipe> recipes){
+    public RecipesAdapter(Context context, List<Recipe> recipes){
         this.mRecipes = recipes;
         this.mContext = context;
     }
