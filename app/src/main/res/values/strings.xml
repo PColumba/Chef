@@ -31,9 +31,7 @@
         <item>110</item>
         <item>120</item>
     </string-array>
-    <string name="title_activity_recipes_list">RecipesListActivity</string>
-    <string name="title_activity_recipe_detail">RecipeDetailActivity</string>
-    <string name="preparation_details_disclaimer">Preparation details, please see: </string>
+    <string name="preparation_details_disclaimer">Preparation details, please see:\u0020</string>
     <string name="title_activity_login">Sign in</string>
     <string name="password_hint">Password</string>
     <string name="email_hint">Email</string>

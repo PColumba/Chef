@@ -21,7 +21,6 @@ import android.widget.Toast;
 import com.example.chef.R;
 import com.example.chef.user.UserInfoActivity;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,22 +48,18 @@ public class SearchActivity extends AppCompatActivity implements TextView.OnEdit
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        // Inflate only if user is logged in
+        if(FirebaseAuth.getInstance().getCurrentUser() != null)
+            getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+        int id = item.getItemId();
         if (id == R.id.action_user_info) {
-            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-            if(currentUser == null) {
+            if(FirebaseAuth.getInstance().getCurrentUser() == null) {
                 displayToast("You are not logged in!");
                 return true;
             }
@@ -72,9 +67,7 @@ public class SearchActivity extends AppCompatActivity implements TextView.OnEdit
                 Intent intent = new Intent(this, UserInfoActivity.class);
                 startActivity(intent);
             }
-
         }
-
         return super.onOptionsItemSelected(item);
     }
 
