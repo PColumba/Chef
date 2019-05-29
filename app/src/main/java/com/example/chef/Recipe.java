@@ -1,6 +1,5 @@
 package com.example.chef;
 
-import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -33,6 +32,8 @@ public class Recipe implements Parcelable {
     public String getLabel(){
         return mLabel;
     }
+
+    public List<String> getIngredientsList(){ return  mIngredientsList;}
 
     protected Recipe(Parcel in) {
         mLabel = in.readString();
