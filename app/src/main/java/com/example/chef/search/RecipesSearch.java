@@ -16,35 +16,42 @@ public class RecipesSearch {
     private String mQueryIngredients = "";
     private String mQueryRecipeCount;
     private String mQueryPreparationTime;
+    private String mQueryIngredientsCount;
     private String mErrorMessage = "";
     private String mBuiltURL;
 
+    private final static int NO_LIMIT = -1;
     private final static String BASE_URI = "https://api.edamam.com/search?";
     private final static String PARAM_Q = "q";
     private final static String PARAM_TO = "to";
     private final static String PARAM_TIME = "time";
+    private final static String PARAM_INGREDIENTS = "ingr";
     private final static String PARAM_APP_ID = "app_id";
     private final static String PARAM_APP_KEY = "app_key";
     private final static String APP_ID = "a22ced66";
     private final static String APP_KEY = "d62f0c2724608c401efdf240599ee9bb";
 
-
-
-    RecipesSearch(List<String> ingredients, int recipeCount, int preparationTime){
+    RecipesSearch(List<String> ingredients, int recipeCount, int preparationTime, int ingredientsCount){
         for(String ingredient : ingredients)
             mQueryIngredients += ingredient + ",";
         mQueryRecipeCount = String.valueOf(recipeCount);
-        mQueryPreparationTime = String.valueOf(preparationTime);
+        if(preparationTime != NO_LIMIT)
+            mQueryPreparationTime = String.valueOf(preparationTime);
+        if(ingredientsCount != NO_LIMIT)
+            mQueryIngredientsCount = String.valueOf(ingredientsCount);
     }
 
     private String buildSearchURL(){
         Uri searchURL = Uri.parse(BASE_URI).buildUpon()
                 .appendQueryParameter(PARAM_Q,mQueryIngredients)
                 .appendQueryParameter(PARAM_TO,mQueryRecipeCount)
-                .appendQueryParameter(PARAM_TIME, mQueryPreparationTime)
                 .appendQueryParameter(PARAM_APP_ID, APP_ID)
                 .appendQueryParameter(PARAM_APP_KEY, APP_KEY)
                 .build();
+        if(mQueryPreparationTime != null)
+            searchURL = searchURL.buildUpon().appendQueryParameter(PARAM_TIME, mQueryPreparationTime).build();
+        if(mQueryIngredientsCount != null)
+            searchURL = searchURL.buildUpon().appendQueryParameter(PARAM_INGREDIENTS, mQueryIngredientsCount).build();
         mBuiltURL = searchURL.toString();
         return searchURL.toString();
     }
