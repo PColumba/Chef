@@ -57,12 +57,24 @@
             android:onClick="signIn"/>
 
         <Button
-            android:id="@+id/button_register"
+            android:id="@+id/register_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/button_register_label"
+            android:text="@string/register_button_label"
             android:onClick="register"/>
     </LinearLayout>
+
+    <com.facebook.login.widget.LoginButton xmlns:facebook="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/facebook_login_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textSize="16sp"
+        facebook:layout_constraintEnd_toEndOf="parent"
+        facebook:layout_constraintStart_toStartOf="parent"
+        facebook:layout_constraintTop_toBottomOf="@+id/relativeLayout"
+        facebook:com_facebook_login_text="Use Facebook"
+        facebook:com_facebook_logout_text="Log out" />
 
     <ImageView
         android:id="@+id/chef_logo"
@@ -78,11 +90,11 @@
         android:id="@+id/continueWithoutSigning_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/Continue_without_signing"
+        android:layout_marginTop="8dp"
         android:onClick="startAppWithoutSigning"
+        android:text="@string/Continue_without_signing"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/facebook_login_button" />
 
 </android.support.constraint.ConstraintLayout>
