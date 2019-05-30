@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="recipe_count_default_spinner_position">4</integer>
-    <integer name="preparation_time_default_spinner_position">5</integer>
+    <integer name="recipeCount_default_spinner_position">4</integer>
+    <integer name="preparationTime_default_spinner_position">5</integer>
+    <integer name="ingredientsCount_default_spinner_position">3</integer>
+    <integer name="spinner_no_limit">-1</integer>
 </resources>

@@ -30,8 +30,10 @@ public class SearchActivity extends AppCompatActivity implements TextView.OnEdit
     private List<String> mIngredients;
     private Spinner mPreparationTimeSpinner;
     private Spinner mRecipeCountSpinner;
+    private Spinner mIngredientsCountSpinner;
     private int mPreparationTime = 60;
     private int mRecipeCount = 5;
+    private int mIngredientsCount = 4;
 
 
     @Override
@@ -81,7 +83,7 @@ public class SearchActivity extends AppCompatActivity implements TextView.OnEdit
     }
 
     public void searchForRecipes(View view) {
-        new RecipesSearchTask(getApplicationContext()).execute(new RecipesSearch(mIngredients,mRecipeCount,mPreparationTime));
+        new RecipesSearchTask(getApplicationContext()).execute(new RecipesSearch(mIngredients,mRecipeCount,mPreparationTime,mIngredientsCount));
     }
 
     public void displayToast(String message){
@@ -92,8 +94,20 @@ public class SearchActivity extends AppCompatActivity implements TextView.OnEdit
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         if(parent == mRecipeCountSpinner)
             mRecipeCount = Integer.valueOf((String) parent.getAdapter().getItem(position));
-        else if(parent == mPreparationTimeSpinner)
-            mPreparationTime = Integer.valueOf((String) parent.getAdapter().getItem(position));
+        else if(parent == mPreparationTimeSpinner) {
+            String value = (String) parent.getAdapter().getItem(position);
+            if(value == getString(R.string.spinner_no_limt))
+                mPreparationTime = getResources().getInteger(R.integer.spinner_no_limit);
+            else
+                mPreparationTime = Integer.valueOf((String) parent.getAdapter().getItem(position));
+        }
+        else if(parent == mIngredientsCountSpinner) {
+            String value = (String) parent.getAdapter().getItem(position);
+            if(value == getString(R.string.spinner_no_limt))
+                mIngredientsCount = getResources().getInteger(R.integer.spinner_no_limit);
+            else
+                mIngredientsCount = Integer.valueOf((String) parent.getAdapter().getItem(position));
+        }
     }
 
     @Override
@@ -104,16 +118,22 @@ public class SearchActivity extends AppCompatActivity implements TextView.OnEdit
     private void initSpinner(){
         mRecipeCountSpinner = findViewById(R.id.recipeCount_spinner);
         mPreparationTimeSpinner = findViewById(R.id.preparationTime_spinner);
+        mIngredientsCountSpinner = findViewById(R.id.ingredientsCount_spinner);
         ArrayAdapter<CharSequence> recipeCountSpinnerAdapter = ArrayAdapter.createFromResource(this,
                 R.array.recipeCount_spinner_data, android.R.layout.simple_spinner_item);
         ArrayAdapter<CharSequence> preparationTimeSpinnerAdapter = ArrayAdapter.createFromResource(this,
                 R.array.preparationTime_spinner_data, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> mIngredientsCountSpinnerAdapter = ArrayAdapter.createFromResource(this,
+                R.array.ingredientsCount_spinner_data, android.R.layout.simple_spinner_item);
         mRecipeCountSpinner.setAdapter(recipeCountSpinnerAdapter);
         mPreparationTimeSpinner.setAdapter(preparationTimeSpinnerAdapter);
+        mIngredientsCountSpinner.setAdapter(mIngredientsCountSpinnerAdapter);
         mRecipeCountSpinner.setOnItemSelectedListener(this);
         mPreparationTimeSpinner.setOnItemSelectedListener(this);
-        mRecipeCountSpinner.setSelection(getResources().getInteger(R.integer.recipe_count_default_spinner_position));
-        mPreparationTimeSpinner.setSelection(getResources().getInteger(R.integer.preparation_time_default_spinner_position));
+        mIngredientsCountSpinner.setOnItemSelectedListener(this);
+        mRecipeCountSpinner.setSelection(getResources().getInteger(R.integer.recipeCount_default_spinner_position));
+        mPreparationTimeSpinner.setSelection(getResources().getInteger(R.integer.preparationTime_default_spinner_position));
+        mIngredientsCountSpinner.setSelection(getResources().getInteger(R.integer.ingredientsCount_default_spinner_position));
     }
 
     private void initRecycler(){
