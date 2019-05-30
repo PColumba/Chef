@@ -1,6 +1,7 @@
 package com.example.chef.search_result_detailed;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -116,16 +117,10 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
     private void loadRecipe(){
 
-        ImageView recipeDetailsImageView;
-        TextView recipeDetailsLabelView;
-        TextView recipeDetailsIngredientsView;
-        TextView recipeDetailsPreparationView;
-
-        recipeDetailsImageView = findViewById(R.id.recipe_details_image);
-        recipeDetailsLabelView = findViewById(R.id.recipe_details_label);
-        recipeDetailsIngredientsView = findViewById(R.id.recipe_details_ingredients);
-        recipeDetailsPreparationView = findViewById(R.id.recipe_details_preparation);
-
+        ImageView recipeDetailsImageView = findViewById(R.id.recipe_details_image);
+        TextView recipeDetailsLabelView = findViewById(R.id.recipe_details_label);
+        TextView recipeDetailsIngredientsView = findViewById(R.id.recipe_details_ingredients);
+        TextView recipeDetailsPreparationView = findViewById(R.id.recipe_details_preparation);
 
         Glide.with(this)
                 .load(mRecipe.getImageURL())
@@ -133,6 +128,12 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         recipeDetailsLabelView.setText(mRecipe.getLabel());
         recipeDetailsIngredientsView.setText(mRecipe.ingredientsListToString());
         recipeDetailsPreparationView.setText(getString(R.string.preparation_details_disclaimer) + mRecipe.getSourceURL());
+    }
 
+    public void showNearbyShops(View view) {
+        Uri geoUri = Uri.parse(getString(R.string.nearby_shops_geo_uri));
+        Intent mapInent = new Intent(Intent.ACTION_VIEW, geoUri);
+        mapInent.setPackage(getString(R.string.google_maps_package));
+        startActivity(mapInent);
     }
 }

@@ -60,4 +60,7 @@
     <string name="show_favorites_button_label">Show Favorites</string>
     <string name="signOut_button_label">Sign out</string>
     <string name="ingredientsCount_text_label">Ingredients limit:\u0020</string>
+    <string name="missing_ingredients_text"><u>Missing ingredients? See shops near you</u></string>
+    <string name="nearby_shops_geo_uri">geo:0,0?q=grocery shop</string>
+    <string name="google_maps_package">com.google.android.apps.maps</string>
 </resources>
