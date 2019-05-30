@@ -41,8 +41,21 @@
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="16dp"
+            android:lineSpacingExtra="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recipe_details_label" />
+
+        <TextView
+            android:id="@+id/missing_ingredients"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/missing_ingredients_text"
+            android:onClick="showNearbyShops"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recipe_details_ingredients" />
 
         <TextView
             android:id="@+id/recipe_details_preparation"
@@ -51,8 +64,9 @@
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="16dp"
+            android:textStyle="bold"
             android:autoLink="web"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recipe_details_ingredients" />
+            app:layout_constraintTop_toBottomOf="@+id/missing_ingredients" />
     </android.support.constraint.ConstraintLayout>
 </android.support.v4.widget.NestedScrollView>
