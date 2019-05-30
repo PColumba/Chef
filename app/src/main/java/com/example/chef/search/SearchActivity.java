@@ -1,6 +1,7 @@
 package com.example.chef.search;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -31,6 +32,7 @@ public class SearchActivity extends AppCompatActivity implements TextView.OnEdit
     private Spinner mPreparationTimeSpinner;
     private Spinner mRecipeCountSpinner;
     private Spinner mIngredientsCountSpinner;
+    private RecipesSearchTask mRecipeSearchTask;
     private int mPreparationTime = 60;
     private int mRecipeCount = 5;
     private int mIngredientsCount = 4;
@@ -44,7 +46,7 @@ public class SearchActivity extends AppCompatActivity implements TextView.OnEdit
         setSupportActionBar(toolbar);
         EditText ingredientsInputField = findViewById(R.id.ingredients_input_field);
         ingredientsInputField.setOnEditorActionListener(this);
-        initSpinner();
+        initSpinners();
         initRecycler();
     }
 
@@ -83,7 +85,12 @@ public class SearchActivity extends AppCompatActivity implements TextView.OnEdit
     }
 
     public void searchForRecipes(View view) {
-        new RecipesSearchTask(getApplicationContext()).execute(new RecipesSearch(mIngredients,mRecipeCount,mPreparationTime,mIngredientsCount));
+        if(mRecipeSearchTask == null)
+            mRecipeSearchTask = (RecipesSearchTask) new RecipesSearchTask(getApplicationContext()).
+                execute(new RecipesSearch(mIngredients,mRecipeCount,mPreparationTime,mIngredientsCount));
+        else if(mRecipeSearchTask.getStatus() == AsyncTask.Status.FINISHED)
+            mRecipeSearchTask = (RecipesSearchTask) new RecipesSearchTask(getApplicationContext()).
+                    execute(new RecipesSearch(mIngredients,mRecipeCount,mPreparationTime,mIngredientsCount));
     }
 
     public void displayToast(String message){
@@ -115,7 +122,7 @@ public class SearchActivity extends AppCompatActivity implements TextView.OnEdit
         //Do nothing
     }
 
-    private void initSpinner(){
+    private void initSpinners(){
         mRecipeCountSpinner = findViewById(R.id.recipeCount_spinner);
         mPreparationTimeSpinner = findViewById(R.id.preparationTime_spinner);
         mIngredientsCountSpinner = findViewById(R.id.ingredientsCount_spinner);
