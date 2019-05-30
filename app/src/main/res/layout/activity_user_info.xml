@@ -14,7 +14,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="24dp"
         android:onClick="showFavorites"
-        android:text="Show Favorites"
+        android:text="@string/show_favorites_button_label"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/user_label" />
 
@@ -39,7 +39,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:textSize="30sp"
+        android:textSize="20sp"
+        android:fontFamily="sans-serif-smallcaps"
         app:layout_constraintBaseline_toBaselineOf="@+id/user_label"
         app:layout_constraintStart_toEndOf="@+id/user_label" />
 
@@ -52,8 +53,20 @@
         android:layout_marginTop="16dp"
         android:fontFamily="sans-serif-smallcaps"
         android:text="@string/user_label"
-        android:textSize="30sp"
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/signOut_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/signOut_button_label"
+        android:onClick="signOut"
+        app:layout_constraintStart_toEndOf="@+id/button_receive_data"
+        app:layout_constraintTop_toBottomOf="@+id/user_label" />
 
 </android.support.constraint.ConstraintLayout>
