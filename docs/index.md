@@ -9,6 +9,12 @@ Chef let's you:
 * Register an account and add favorite recipes
 * View nearby shops in case you are missing ingredients (android only)
 
+Chef app was developed by:
+* Paweł Gołąb - 202655, KrZZIs3011 (team lead)
+* Bartosz Filek - 202610, KrZZIs3011Io
+* Sebastian Bednarczyk - 202465, KrZZIs3011Io
+* Kamil Błachowicz - 204551, KrZZIs3011Io
+
 See for yourself:
 
 ![Chef android login](/images/Login.png)
