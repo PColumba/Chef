@@ -9,6 +9,9 @@ Chef let's you:
 * Register an account and add favorite recipes
 * View nearby shops in case you are missing ingredients (android only)
 
+See for yourself:
 
-
+![Chef android login](/images/Login.png)
+![Chef android search](/images/Ingredients.png)
+![Chef android recipe](/images/Recipe3.png)
 
